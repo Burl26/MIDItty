@@ -43,7 +43,7 @@ try:
     # maybe for huge sysx transfers, you might want to select hardware handshaking
     ser = serial.Serial(args.serial, baud, xonxoff=False, rtscts=False, dsrdtr=False)
 except:
-    print('Could not open serial device: '.join(args.serial).join('\n'))
+    print('Could not open serial device: ' + args.serial + '\n')
     client.close()
     exit()
 ser.flushInput()
@@ -57,10 +57,10 @@ if not argname == '' and argname is not None:
     for i in tp:
         if i.name.find(argname) >= 0:
             connclient = i
-            print('Found target: '.join(i.name).join('\n'))
+            print('Found target: ' + i.name + '\n')
             break
     if connclient is None:
-        print('Could not find target: '.join(argname).join('\n'))
+        print('Could not find target: ' + argname + '\n')
         client.close()
         ser.close()
         exit()
@@ -91,7 +91,7 @@ if connclient is not None and thisclient is not None:
         client.connect(thisclient, connclient)
         print('Connected')
     except:
-        print('Error in connecting '.join(thisclient.name).join(' to ').join(connclient.name).join('\n'))
+        print('Error in connecting ' + thisclient.name + ' to ' + connclient.name + '\n')
 
 with midiout:
     print('Running...')
