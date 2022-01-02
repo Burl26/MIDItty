@@ -9,10 +9,18 @@
 import time
 import serial
 import argparse
+import signal
 import rtmidi
 import jack
 
 PORTNAME = 'MIDItty Serial to MIDI'
+
+loopit = False
+
+def handler(signum, frame):
+    global loopit
+    loopit = False
+
 
 # get arguments
 parser = argparse.ArgumentParser(description='MIDItty Serial to MIDI virtual ALSA device')
@@ -92,11 +100,13 @@ if connclient is not None and thisclient is not None:
         print('Connected')
     except:
         print('Error in connecting ' + thisclient.name + ' to ' + connclient.name + '\n')
-
+        
+signal.signal(signal.SIGINT, handler)
+loopit = True
 with midiout:
     print('Running...')
     # main loop runs forever
-    while (True):
+    while (loopit):
         if (ser.inWaiting() > 0):
             d = ser.read(ser.in_waiting)
             midiout.send_message(d)
@@ -110,6 +120,7 @@ with midiout:
     
 # if we are running, this code never executes. 
 # clean up and close
+print('Cleaning up')
 midiout.close_port()
 midiout.delete()
 ser.close()
