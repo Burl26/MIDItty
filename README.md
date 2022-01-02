@@ -19,9 +19,10 @@ Notes:
 1. I recommend you use the maximum baud rate (do not specify BAUD).
 2. You can connect two PCs together using two FTDI with crossed RX/TX lines.  For best results,
    use optocouplers as directly connecting may cause noise issues in the serial signals.  Direct connection to
-   USB-powered devices will not not optocouplers.
+   USB-powered devices will not require optocouplers.  See PNG file for schematic.
 3. The target does not have to be the full jack name.  You can use a fragment of the description.
    In the example below, the fragment 'setB' is all that is needed to connect 'setBfree DSP Tonewheel Organ'.
+4. To exit the program, type Ctrl-C.  It will disconnect itself and clean up properly.
 
 Example Command:
 python3 miditty.py -s /dev/ttyUSB0 -t setB
